@@ -9,63 +9,59 @@ declare(strict_types=1);
 
 namespace Edvardas\Special\Block;
 
-use Magento\Cms\Api\BlockRepositoryInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Edvardas\Special\Logger\Logger;
+use Edvardas\Special\Model\Config\PopupConfig;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
-use Magento\Store\Model\ScopeInterface;
-use Magento\Store\Model\StoreManagerInterface;
 
 class SpecialOfferPopup extends Template
 {
-    private $blockRepository;
-    private $scopeConfig;
-    private $storeManager;
+    private $popupConfig;
+    private $logger;
+
+    private static $defaulContent = 'g';
+    private static $defaultDisplayTime = 1000;
 
     public function __construct(
         Context $context,
-        BlockRepositoryInterface $blockRepository,
-        ScopeConfigInterface $scopeConfig,
-        StoreManagerInterface $storeManager,
+        PopupConfig $popupConfig,
+        Logger $logger,
         array $data = []
     )
     {
         parent::__construct($context, $data);
-        $this->blockRepository = $blockRepository;
-        $this->scopeConfig = $scopeConfig;
-        $this->storeManager = $storeManager;
+        $this->popupConfig = $popupConfig;
+        $this->logger = $logger;
     }
 
-
-    public function getContent(): string
+    public function getSpecialOfferBlockContent(): string
     {
         try {
-            $specialOfferBlockId = $this->scopeConfig->getValue(
-                'specialOfferModuleConfig/general/popupBlock',
-                ScopeInterface::SCOPE_STORE,
-                $this->storeManager->getStore()->getId()
-            );
-            $block = $this->blockRepository->getById($specialOfferBlockId);
-            $content = $block->getContent();
+            $specialOfferBlockId = $this->popupConfig->getSpecialOfferBlockId();
+            $block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($specialOfferBlockId);
+            $content = $block->toHtml();
         } catch (LocalizedException $exception) {
-            $content = '';
+            $this->logger->error($exception->getMessage());
+            $content = self::$defaulContent;
         }
-        return $content;
+        return (string) $content;
     }
 
-    public function getDisplayTime(): int
+    public function getDisplayTimeMilliseconds(): int
     {
         try {
-            $displayTimeSeconds = $this->scopeConfig->getValue(
-                'specialOfferModuleConfig/general/popupTime',
-                ScopeInterface::SCOPE_STORE,
-                $this->storeManager->getStore()->getId()
-            );
-            $displayTimeMilliseconds = (int) 1000*$displayTimeSeconds;
+            $displayTimeSeconds = $this->popupConfig->getPopupDisplayTimeSeconds();
+            $displayTimeMilliseconds = $this->secondsToMilliseconds($displayTimeSeconds);
         } catch (LocalizedException $exception) {
-            $displayTimeMilliseconds = 2000;
+            $this->logger->error($exception->getMessage());
+            $displayTimeMilliseconds = self::$defaultDisplayTime;
         }
-        return $displayTimeMilliseconds;
+        return (int) $displayTimeMilliseconds;
+    }
+
+    private function secondsToMilliseconds($seconds)
+    {
+        return 1000*$seconds;
     }
 }

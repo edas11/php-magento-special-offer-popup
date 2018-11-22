@@ -9,14 +9,8 @@ define([
         autoOpen: true,
         responsive: true,
         innerScroll: false,
-        title: 'popup modal title',
-        buttons: [{
-            text: $.mage.__('Continue'),
-            class: '',
-            click: function () {
-                this.closeModal();
-            }
-        }]
+        title: 'Special offer',
+        buttons: []
     };
 
     return function(scriptParameters)
