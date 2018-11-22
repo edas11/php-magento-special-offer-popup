@@ -28,26 +28,23 @@ class PopupConfig
 
     public function isModuleEnabled(): bool
     {
-        return (bool) $this->scopeConfig->getValue(
-            'specialOfferModuleConfig/general/enable',
-            ScopeInterface::SCOPE_STORE,
-            $this->storeManager->getStore()->getId()
-        );
+        return (bool) $this->getStoreConfig('specialOfferModuleConfig/general/enable');
     }
 
     public function getSpecialOfferBlockId(): string
     {
-        return (string) $this->scopeConfig->getValue(
-            'specialOfferModuleConfig/general/popupBlock',
-            ScopeInterface::SCOPE_STORE,
-            $this->storeManager->getStore()->getId()
-        );
+        return (string) $this->getStoreConfig('specialOfferModuleConfig/general/popupBlock');
     }
 
     public function getPopupTimeoutSeconds(): float
     {
-        return (float) $this->scopeConfig->getValue(
-            'specialOfferModuleConfig/general/popupTime',
+        return (float) $this->getStoreConfig('specialOfferModuleConfig/general/popupTime');
+    }
+
+    private function getStoreConfig(string $path)
+    {
+        return $this->scopeConfig->getValue(
+            $path,
             ScopeInterface::SCOPE_STORE,
             $this->storeManager->getStore()->getId()
         );

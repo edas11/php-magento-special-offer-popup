@@ -9,7 +9,7 @@ define([
         autoOpen: false,
         responsive: true,
         innerScroll: false,
-        title: 'Special offer',
+        title: false,
         buttons: []
     };
 

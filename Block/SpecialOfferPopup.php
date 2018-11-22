@@ -52,7 +52,9 @@ class SpecialOfferPopup extends Template
     {
         try {
             $specialOfferBlockId = $this->popupConfig->getSpecialOfferBlockId();
-            $block = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($specialOfferBlockId);
+            /** @var \Magento\Cms\Block\Block $block */
+            $block = $this->getLayout()->createBlock('Magento\Cms\Block\Block');
+            $block->setBlockId($specialOfferBlockId);
             $content = $block->toHtml();
         } catch (LocalizedException $exception) {
             $this->logger->error($exception->getMessage());
