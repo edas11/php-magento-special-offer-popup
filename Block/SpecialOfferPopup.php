@@ -22,7 +22,7 @@ class SpecialOfferPopup extends Template
     private $logger;
     private $logoBlock;
 
-    private static $defaulContent = 'g';
+    private static $defaulContent = '';
     private static $defaultDisplayTime = 1000;
 
     public function __construct(
@@ -38,9 +38,14 @@ class SpecialOfferPopup extends Template
         $this->logoBlock = $logoBlock;
     }
 
-    public function isHomePage(): bool
+    public function shouldShowPopup(): bool
     {
-        return $this->logoBlock->isHomePage();
+        try {
+            return $this->logoBlock->isHomePage() && $this->popupConfig->isModuleEnabled();
+        } catch (LocalizedException $exception) {
+            $this->logger->error($exception->getMessage());
+            return false;
+        }
     }
 
     public function getSpecialOfferBlockContent(): string

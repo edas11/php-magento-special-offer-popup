@@ -1,4 +1,4 @@
-<?php if ($block->isHomePage()) {?>
+<?php if ($block->shouldShowPopup()) {?>
     <div id="modal-overlay" style="display:none;">
         <?php echo $block->getSpecialOfferBlockContent() ?>
     </div>

@@ -26,6 +26,15 @@ class PopupConfig
         $this->storeManager = $storeManager;
     }
 
+    public function isModuleEnabled(): bool
+    {
+        return (bool) $this->scopeConfig->getValue(
+            'specialOfferModuleConfig/general/enable',
+            ScopeInterface::SCOPE_STORE,
+            $this->storeManager->getStore()->getId()
+        );
+    }
+
     public function getSpecialOfferBlockId(): string
     {
         return (string) $this->scopeConfig->getValue(

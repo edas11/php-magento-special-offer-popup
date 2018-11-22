@@ -3,6 +3,7 @@
     <default>
         <specialOfferModuleConfig>
             <general>
+                <enable>1</enable>
                 <popupTime>1</popupTime>
                 <popupBlock>test-id</popupBlock>
             </general>

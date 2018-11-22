@@ -11,6 +11,11 @@
             <resource>Edvardas_Special::module</resource>
             <group id="general" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Special Offer Module Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Module</label>
+                    <comment>Choose whether popup should be enabled.</comment>
+                    <source_model>Edvardas\Special\Model\Config\Source\ModuleEnable</source_model>
+                </field>
                 <field id="popupTime" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Popup Display Timeout</label>
                     <comment>Set after how many seconds popup should appear.</comment>
