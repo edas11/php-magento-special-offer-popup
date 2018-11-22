@@ -1,0 +1,13 @@
+<div id="modal-overlay" style="display:none;width:500px;height: 500px;border:1px solid black;">
+    <?php echo $block->getContent() ?>
+</div>
+<script type="text/x-magento-init">
+   {
+        "*": {
+            "Edvardas_Special/js/special-offer":
+                {
+                    "displayTime": "<?php echo $block->getDisplayTime() ?>"
+                }
+        }
+   }
+</script>
