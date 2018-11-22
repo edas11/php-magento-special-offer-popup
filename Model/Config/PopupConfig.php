@@ -35,7 +35,7 @@ class PopupConfig
         );
     }
 
-    public function getPopupDisplayTimeSeconds(): float
+    public function getPopupTimeoutSeconds(): float
     {
         return (float) $this->scopeConfig->getValue(
             'specialOfferModuleConfig/general/popupTime',

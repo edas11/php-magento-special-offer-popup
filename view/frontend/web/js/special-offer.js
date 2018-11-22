@@ -6,7 +6,7 @@ define([
 
     var options = {
         type: 'popup',
-        autoOpen: true,
+        autoOpen: false,
         responsive: true,
         innerScroll: false,
         title: 'Special offer',
@@ -15,15 +15,15 @@ define([
 
     return function(scriptParameters)
     {
-        var displayTime = scriptParameters.displayTime;
+        var displayTimeout = scriptParameters.displayTimeout;
 
         $('#modal-overlay').modal(options);
 
         setTimeout(
             function() {
-                $('#modal-overlay').modal('closeModal');
+                $('#modal-overlay').modal('openModal');
             },
-            displayTime
+            displayTimeout
         );
     }
 });

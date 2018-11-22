@@ -1,13 +1,15 @@
-<div id="modal-overlay" style="display:none;">
-    <?php echo $block->getSpecialOfferBlockContent() ?>
-</div>
-<script type="text/x-magento-init">
-   {
-        "*": {
-            "Edvardas_Special/js/special-offer":
-                {
-                    "displayTime": "<?php echo $block->getDisplayTimeMilliseconds() ?>"
-                }
-        }
-   }
-</script>
+<?php if ($block->isHomePage()) {?>
+    <div id="modal-overlay" style="display:none;">
+        <?php echo $block->getSpecialOfferBlockContent() ?>
+    </div>
+    <script type="text/x-magento-init">
+       {
+            "*": {
+                "Edvardas_Special/js/special-offer":
+                    {
+                        "displayTimeout": "<?php echo $block->getPopupTimeoutMilliseconds() ?>"
+                    }
+            }
+       }
+    </script>
+<?php } ?>

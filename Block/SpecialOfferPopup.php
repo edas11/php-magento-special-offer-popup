@@ -14,11 +14,13 @@ use Edvardas\Special\Model\Config\PopupConfig;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Magento\Theme\Block\Html\Header\Logo;
 
 class SpecialOfferPopup extends Template
 {
     private $popupConfig;
     private $logger;
+    private $logoBlock;
 
     private static $defaulContent = 'g';
     private static $defaultDisplayTime = 1000;
@@ -27,12 +29,18 @@ class SpecialOfferPopup extends Template
         Context $context,
         PopupConfig $popupConfig,
         Logger $logger,
+        Logo $logoBlock,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
         $this->popupConfig = $popupConfig;
         $this->logger = $logger;
+        $this->logoBlock = $logoBlock;
+    }
+
+    public function isHomePage(): bool
+    {
+        return $this->logoBlock->isHomePage();
     }
 
     public function getSpecialOfferBlockContent(): string
@@ -48,16 +56,16 @@ class SpecialOfferPopup extends Template
         return (string) $content;
     }
 
-    public function getDisplayTimeMilliseconds(): int
+    public function getPopupTimeoutMilliseconds(): int
     {
         try {
-            $displayTimeSeconds = $this->popupConfig->getPopupDisplayTimeSeconds();
-            $displayTimeMilliseconds = $this->secondsToMilliseconds($displayTimeSeconds);
+            $timeoutSeconds = $this->popupConfig->getPopupTimeoutSeconds();
+            $timeoutMilliseconds = $this->secondsToMilliseconds($timeoutSeconds);
         } catch (LocalizedException $exception) {
             $this->logger->error($exception->getMessage());
-            $displayTimeMilliseconds = self::$defaultDisplayTime;
+            $timeoutMilliseconds = self::$defaultDisplayTime;
         }
-        return (int) $displayTimeMilliseconds;
+        return (int) $timeoutMilliseconds;
     }
 
     private function secondsToMilliseconds($seconds)

@@ -12,8 +12,8 @@
             <group id="general" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Special Offer Module Configuration</label>
                 <field id="popupTime" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Popup Display Time</label>
-                    <comment>Set for how long a special offer popup is shown in seconds.</comment>
+                    <label>Popup Display Timeout</label>
+                    <comment>Set after how many seconds popup should appear.</comment>
                 </field>
                 <field id="popupBlock" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Popup Static Block</label>
